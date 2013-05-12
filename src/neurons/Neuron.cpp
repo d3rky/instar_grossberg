@@ -1,0 +1,82 @@
+#include <vector>
+#include <stdlib.h>
+#include <time.h>
+
+#include "../../include/Neuron.h"
+
+using namespace neuron;
+
+////////////////////////////////////////////////////////////////////////////////
+// constructors
+
+Neuron::Neuron(const int inputNum) : _inputsNum(inputNum) {
+    setRandomWeights();
+};
+
+////////////////////////////////////////////////////////////////////////////////
+// public functions
+
+double Neuron::getOutput(std::vector<double> input) {
+    std::vector<double> normalizeInput = _normalizeInput(input);
+    double weightSum = _getWeightSum(normalizeInput);
+
+    return _activationFunc(weightSum);
+};
+
+
+std::vector<double> Neuron::getWeights() const {
+    return _weights;
+};
+
+
+void Neuron::setWeights(std::vector<double> weights) {
+    if(weights.size() != _weights.size()) {
+        throw "Vector size is more then _weights vector size.";
+    }
+
+    _weights = weights;
+};
+
+
+void Neuron::setRandomWeights() {
+    srand(time(NULL));
+
+    _weights.erase(_weights.begin(), _weights.end());
+
+    //заполним вектор весов случайными значениями [0; 1]
+    for(int i=0; i<_inputsNum; i++) {
+        _weights.push_back(rand() / static_cast<double>(RAND_MAX));
+    }
+};
+
+
+void Neuron::setWeightsToZero() {
+
+    _weights.erase(_weights.begin(), _weights.end());
+
+    for(int i=0; i<_inputsNum; i++) {
+        _weights.push_back(0.0);
+    }
+};
+
+////////////////////////////////////////////////////////////////////////////////
+// private functions
+
+std::vector<double> Neuron::_normalizeInput(std::vector<double> input) {
+    return input;
+};
+
+
+double Neuron::_getWeightSum(std::vector<double> input) {
+    double weightSum = 0.0;
+
+    if(input.size() != _weights.size()) {
+        throw "Input vector hasn't the same size as weight vector";
+    }
+
+    for(int i=0; i<input.size(); i++) {
+        weightSum += input.at(i)*_weights.at(i);
+    }
+
+    return weightSum;
+};

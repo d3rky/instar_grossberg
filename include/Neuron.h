@@ -1,0 +1,102 @@
+#ifndef NEURON_H
+
+#define NEURON_H
+
+#include <vector>
+
+namespace neuron {
+
+/**
+ * @class Абстрактный нейрона
+ */
+class Neuron {
+  
+    public:
+        /**
+         * @constructor
+         * По умолчанию значения весов устанавливаются случайными значениями
+         *
+         * @param {const int} количество входов нейрона
+         */
+        Neuron(const int inputsNum);
+
+        /**
+         * По входному вектору определить выход нейрона
+         *
+         * @param {std::vector<double>} входной вектор значений
+         *
+         * @return {double} значение выхода нейрона
+         */
+        double getOutput(std::vector<double> input);
+
+        /**
+         * Возвращаем веса всех входов
+         *
+         * @return {std::vector<double>}
+         */
+        std::vector<double> getWeights() const;
+
+        /**
+         * Устанавливаем веса всех входов
+         *
+         * @param {std::vector<double>} веса нейронов
+         */
+        void setWeights(std::vector<double> weights);
+
+        /**
+         * Установим веса нейрона в нулевое значение
+         */
+        void setWeightsToZero();
+
+        /**
+         * Установим значения весов в рандомное значение
+         */
+        void setRandomWeights();
+
+        virtual ~Neuron() {};
+
+    protected:
+
+        /**
+         * Количество входов для нейрона, включай вход поляризации
+         */
+        const int _inputsNum;
+
+        /**
+         * веса для входов
+         */
+        std::vector<double> _weights;
+
+
+        /**
+         * Нормализуем входной вектор. По умолчанию - возвращает вектор input,
+         *      переопределите в производном классе
+         *
+         * @param {std::vector<double>} входной вектор
+         *
+         * @retunr {std::vector<double>} выходной нормализованный вектор
+         */
+        std::vector<double> _normalizeInput(std::vector<double> input);
+
+        /**
+         * Возвращаем взвешенную сумму для входного вектора
+         *
+         * @param {std::vector<double>} входной вектор
+         *
+         * @return {double} взвешенная сумма
+         */
+        double _getWeightSum(std::vector<double> input);
+
+        /**
+         * Виртуальная функция активации
+         *
+         * @param {double} входная взвешенная сумма
+         *
+         * @return реакция нейрона
+         */
+        virtual double _activationFunc(double input)=0;
+};
+
+}; //namespace neuron
+
+#endif
