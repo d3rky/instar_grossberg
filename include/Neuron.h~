@@ -55,6 +55,8 @@ class Neuron {
          */
         void setRandomWeights();
 
+	void print(std::ofstream &stream);
+
     protected:
 
         /**

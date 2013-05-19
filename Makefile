@@ -13,7 +13,7 @@ UTILS_CPP=$(SOURCE_DIR)/DataReader.cpp
 
 MAIN_CPP=$(SOURCE_DIR)/main.cpp
 
-SOURCES=$(NEURON_CPP) $(MAIN_CPP) $(UTILS_CPP) $(TRAINER_CPP)
+SOURCES=$(UTILS_CPP) $(NEURON_CPP) $(TRAINER_CPP) $(MAIN_CPP)
 OBJECTS=$(SOURCES:.cpp=.o)
 
 all: neuron
@@ -29,4 +29,6 @@ object_dir:
 	$(CC) $(CFLAGS) $< -o $@
 
 clean:
-	rm -rf $(SOURCE_DIR)/**/*.o $(BUILD_DIR)/neuron
+	rm -rf $(SOURCE_DIR)/**/*.o
+	rm -rf $(SOURCE_DIR)/neuron
+	rm -rf $(SOURCE_DIR)/*.o

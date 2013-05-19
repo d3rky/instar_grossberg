@@ -39,7 +39,7 @@ class Trainer {
         /**
          * Коэффициент обучения
          */
-        double _nu;
+        const double _nu;
 
         /**
          * точность решения
